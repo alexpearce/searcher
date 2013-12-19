@@ -8,9 +8,9 @@
 
 #import "QBSearchWindowController.h"
 #import "QBSyncScrollView.h"
+#import "QBTableCellView.h"
 #import "QBTracksController.h"
 #import "QBTrack.h"
-#import "iTunes.h"
 
 @implementation QBSearchWindowController
 
@@ -72,10 +72,11 @@
 {
   // Let's make sure it's the group column, otherwise return nil
   if ([[tableColumn identifier] isEqualToString:@"GroupColumn"]) {
-    NSTableCellView *cellView = [tableView makeViewWithIdentifier:@"GroupCell" owner:self];
+    QBTableCellView *cellView = [tableView makeViewWithIdentifier:@"GroupCell" owner:self];
     NSDictionary *group = [_tracksController groupAtIndex:row];
     [cellView.imageView setImage:group[@"image"]];
     [cellView.textField setStringValue:group[@"artist"]];
+    [cellView.albumField setStringValue:group[@"album"]];
     return cellView;
   }
   return nil;

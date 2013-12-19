@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E520F6BE1850FA7100782F81 /* QBSyncScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */; };
 		E57C355F185122EF00830987 /* QBTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = E57C355E185122EF00830987 /* QBTrack.m */; };
+		E58441D71863947C00A1E8CA /* QBTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58441D61863947C00A1E8CA /* QBTableCellView.m */; };
 		E58D383E184E1CAE004EDDA1 /* QBTracksController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58D383D184E1CAE004EDDA1 /* QBTracksController.m */; };
 		E58D3841184E1D17004EDDA1 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58D3840184E1D17004EDDA1 /* ScriptingBridge.framework */; };
 		E58D3843184E1D1C004EDDA1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58D3842184E1D1C004EDDA1 /* Carbon.framework */; };
@@ -43,6 +44,8 @@
 		E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBSyncScrollView.m; sourceTree = "<group>"; };
 		E57C355D185122EF00830987 /* QBTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTrack.h; sourceTree = "<group>"; };
 		E57C355E185122EF00830987 /* QBTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBTrack.m; sourceTree = "<group>"; };
+		E58441D51863947C00A1E8CA /* QBTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTableCellView.h; sourceTree = "<group>"; };
+		E58441D61863947C00A1E8CA /* QBTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBTableCellView.m; sourceTree = "<group>"; };
 		E58D3837184E1C5C004EDDA1 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		E58D383C184E1CAE004EDDA1 /* QBTracksController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTracksController.h; sourceTree = "<group>"; };
 		E58D383D184E1CAE004EDDA1 /* QBTracksController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBTracksController.m; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 				E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */,
 				E58D3844184E205E004EDDA1 /* QBTableView.h */,
 				E58D3845184E205E004EDDA1 /* QBTableView.m */,
+				E58441D51863947C00A1E8CA /* QBTableCellView.h */,
+				E58441D61863947C00A1E8CA /* QBTableCellView.m */,
 				E5A3F2F2184E15E4006AFE30 /* Images.xcassets */,
 				E5A3F2E1184E15E4006AFE30 /* Supporting Files */,
 				E58D3838184E1C64004EDDA1 /* iTunes */,
@@ -302,6 +307,7 @@
 			files = (
 				E520F6BE1850FA7100782F81 /* QBSyncScrollView.m in Sources */,
 				E58D383E184E1CAE004EDDA1 /* QBTracksController.m in Sources */,
+				E58441D71863947C00A1E8CA /* QBTableCellView.m in Sources */,
 				E5A3F2E7184E15E4006AFE30 /* main.m in Sources */,
 				E57C355F185122EF00830987 /* QBTrack.m in Sources */,
 				E58D3846184E205E004EDDA1 /* QBTableView.m in Sources */,
