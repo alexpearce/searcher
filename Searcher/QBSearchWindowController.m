@@ -50,6 +50,29 @@
   [_searchField becomeFirstResponder];
 }
 
+- (BOOL)rowInTableView:(NSTableView *) tableView IsDummy:(NSUInteger)row
+{
+  if (tableView == _itemTableView) {
+    NSUInteger groupItemsCount;
+    NSUInteger totalRowsCount = 0;
+    for (NSDictionary *group in [_tracksController groups]) {
+      groupItemsCount = [group[@"count"] unsignedIntegerValue];
+      totalRowsCount += groupItemsCount;
+      if (totalRowsCount > row) {
+        return NO;
+      }
+      if (groupItemsCount < GROUP_ROW_HEIGHT) {
+        totalRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
+      }
+      // If, after we add the dummy rows to the total count, we're over the row count, we're on a dummy row
+      if (totalRowsCount > row) {
+        return YES;
+      }
+    }
+  }
+  return YES;
+}
+
 #pragma mark - IBAction
 
 - (IBAction)submitSearch:(id)sender
@@ -63,26 +86,46 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-  NSInteger numTracksForProperty = [_tracksController propertyAtIndexTrackCount:row];
-  if (numTracksForProperty < GROUP_ROW_HEIGHT) {
-    numTracksForProperty = GROUP_ROW_HEIGHT;
+  CGFloat itemRowHeight = ITEM_ROW_HEIGHT + ITEM_ROW_PADDING;
+  if (tableView == _groupTableView) {
+    NSInteger numTracksForProperty = [_tracksController propertyAtIndexTrackCount:row];
+    if (numTracksForProperty < GROUP_ROW_HEIGHT) {
+      numTracksForProperty = GROUP_ROW_HEIGHT;
+    }
+    CGFloat rowHeight = numTracksForProperty*itemRowHeight;
+    return rowHeight;
+  } else {
+    return itemRowHeight;
   }
-  CGFloat rowHeight = numTracksForProperty*[_itemTableView rectOfRow:0].size.height;
-  return rowHeight - [_itemTableView intercellSpacing].height;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-  // Let's make sure it's the group column, otherwise return nil
-  if ([[tableColumn identifier] isEqualToString:@"GroupColumn"]) {
-    QBTableCellView *cellView = [tableView makeViewWithIdentifier:@"GroupCell" owner:self];
-    NSDictionary *group = [_tracksController groupAtIndex:row];
-    [cellView.imageView setImage:group[@"image"]];
-    [cellView.textField setStringValue:group[@"artist"]];
-    [cellView.albumField setStringValue:group[@"album"]];
-    return cellView;
+  NSString *columnIdentifier = [tableColumn identifier];
+  if (tableView == _groupTableView) {
+    // Let's make sure it's the group column, otherwise return nil
+    if ([columnIdentifier isEqualToString:@"GroupColumn"]) {
+      QBTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
+      NSDictionary *group = [_tracksController groupAtIndex:row];
+      [cellView.imageView setImage:group[@"image"]];
+      [cellView.textField setStringValue:group[@"artist"]];
+      [cellView.albumField setStringValue:group[@"album"]];
+      return cellView;
+    }
+    return nil;
+  } else {
+    if ([columnIdentifier isEqualToString:@"title"]) {
+      NSTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
+      [cellView.textField setStringValue:@"yoyoyo"];
+      return cellView;
+    }
   }
   return nil;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row
+{
+  return ![self rowInTableView:tableView IsDummy:row];
 }
 
 #pragma mark - NSTableViewDataSource
@@ -114,6 +157,9 @@
     NSUInteger dummyRowsCount = 0;
     NSUInteger totalRowsCount = 0;
     NSUInteger trackNum;
+    if ([self rowInTableView:tableView IsDummy:row]) {
+      return @"";
+    }
     for (NSDictionary *group in [_tracksController groups]) {
       groupItemsCount = [group[@"count"] unsignedIntegerValue];
       totalRowsCount += groupItemsCount;
@@ -126,13 +172,8 @@
         totalRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
         dummyRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
       }
-      // If, after we add the dummy rows to the total count, we're over the row count, we're on a dummy row
-      if (totalRowsCount > row) {
-        return @"";
-      }
     }
   }
-  // We shouldn't reach here
   return @"";
 }
 

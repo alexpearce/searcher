@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Alex Pearce. All rights reserved.
 //
 
+#define ITEM_ROW_HEIGHT 17
+#define ITEM_ROW_PADDING 2
 #define GROUP_ROW_HEIGHT 5
 
 #import <Cocoa/Cocoa.h>
@@ -43,6 +45,11 @@
  * @param index Index of the row to be activated
  */
 - (void)activateAtIndex:(NSUInteger)index;
+
+/**
+ * Is the row at index row in tableView a dummy row.
+ */
+- (BOOL)rowInTableView:(NSTableView *) tableView IsDummy:(NSUInteger)row;
 
 /**
  * Fill the table with tracks matching the search string, if any.
