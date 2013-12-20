@@ -10,18 +10,6 @@
 
 @implementation QBSyncScrollView
 
-- (id)initWithFrame:(NSRect)frame
-{
-  if (self = [super initWithFrame:frame]) {
-  }
-  return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	[super drawRect:dirtyRect];
-}
-
 - (void)setSynchronisedScrollView:(NSScrollView *)scrollView
 {
   NSView *synchronisedContentView;
