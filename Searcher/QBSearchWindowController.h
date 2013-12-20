@@ -48,7 +48,7 @@
 - (void)activateAtIndex:(NSUInteger)index;
 
 /**
- * Is the row at index row in tableView a dummy row.
+ * Is the row at index row in tableView a dummy row?
  */
 - (BOOL)rowInTableView:(NSTableView *) tableView IsDummy:(NSUInteger)row;
 

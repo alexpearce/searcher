@@ -36,6 +36,7 @@
 - (void)focus
 {
   [self.window makeKeyAndOrderFront:nil];
+  [_searchField becomeFirstResponder];
   [NSApp activateIgnoringOtherApps:YES];
 }
 
@@ -52,6 +53,10 @@
 
 - (BOOL)rowInTableView:(NSTableView *) tableView IsDummy:(NSUInteger)row
 {
+  // We loop through the groups, each time adding the number of items to a count.
+  // If the number of items is less than the group height, the group has dummy rows so we add the number of them to the count.
+  // If the count exceeds the row number before adding dummy rows, row contains a real item.
+  // If the count exceeds the row number after adding dummy rows, row is a dummy row.
   if (tableView == _itemTableView) {
     NSUInteger groupItemsCount;
     NSUInteger totalRowsCount = 0;
@@ -64,7 +69,6 @@
       if (groupItemsCount < GROUP_ROW_HEIGHT) {
         totalRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
       }
-      // If, after we add the dummy rows to the total count, we're over the row count, we're on a dummy row
       if (totalRowsCount > row) {
         return YES;
       }
@@ -77,6 +81,7 @@
 
 - (IBAction)submitSearch:(id)sender
 {
+  // Start the spinner, perform the search, reload the data, stop the spinner.
   [_progressIndicator startAnimation:nil];
   [_tracksController searchWithString:[sender stringValue]];
   [_groupTableView reloadData];
@@ -88,6 +93,9 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
+  // Group cells are an integer number of item cells high, which are ITEM_ROW_HEIGHT high.
+  // If the group contains fewer items than GROUP_ROW_HEIGHT, the group cell is GROUP_ROW_HEIGHT item cells high.
+  // If the group contains some higher number of items, the group cell is that number of item cells high.
   if (tableView == _groupTableView) {
     NSInteger numTracksForProperty = [_tracksController propertyAtIndexTrackCount:row];
     if (numTracksForProperty < GROUP_ROW_HEIGHT) {
@@ -101,7 +109,12 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+  // We need to return the appropriate view for the column, already filled with data.
+  // If it's for the group column, fetch the group and fill the group cell.
+  // If it's for the item column and the row is a dummy row, return nil as no view is needed.
+  // If it's for the item column and the row is an item, fetch the item and fill the item cell.
   NSString *columnIdentifier = tableColumn.identifier;
+  
   if ([columnIdentifier isEqualToString:@"group"]) {
     QBTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
     NSDictionary *group = [_tracksController groupAtIndex:row];
@@ -110,10 +123,10 @@
     cellView.albumField.stringValue = group[@"album"];
     return cellView;
   } else if ([columnIdentifier isEqualToString:@"title"]) {
-    // No need for views in dummy cells
     if ([self rowInTableView:tableView IsDummy:row]) {
       return nil;
     }
+    
     NSString *cellViewStringValue;
     NSUInteger groupItemsCount;
     NSUInteger dummyRowsCount = 0;
@@ -133,6 +146,7 @@
         dummyRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
       }
     }
+    
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
     cellView.textField.stringValue = cellViewStringValue;
     return cellView;
@@ -142,6 +156,7 @@
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row
 {
+  // We can select a cell if it's not a dummy row.
   return ![self rowInTableView:tableView IsDummy:row];
 }
 
@@ -149,6 +164,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
+  // We need to add on dummy cells for groups containing fewer items than the height of the group cell.
   if (tableView == _groupTableView) {
     return [_tracksController groupCount];
   } else {
