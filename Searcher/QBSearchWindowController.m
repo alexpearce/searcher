@@ -12,6 +12,30 @@
 #import "QBTracksController.h"
 #import "QBTrack.h"
 
+// Minimum number of item rows each group row should occupy
+static NSUInteger kGroupRowHeight = 5;
+// Height of item row
+static CGFloat kItemRowHeight = 17.;
+// Vertical padding of item row
+static CGFloat kItemRowPadding = 2.;
+
+// Private properties and methods.
+@interface QBSearchWindowController ()
+/**
+ * Row indicies containing dummy rows.
+ */
+@property (strong) NSIndexSet *dummyRows;
+/**
+ * Row indicies containing "true" items.
+ */
+@property (strong) NSIndexSet *itemRows;
+
+/**
+ * Fills dummyRows and itemRows with their respective indices.
+ */
+- (void)populateIndexSets;
+@end
+
 @implementation QBSearchWindowController
 
 - (id)initWithWindow:(NSWindow *)window
@@ -26,8 +50,8 @@
 {
   [super windowDidLoad];
 
-  [_itemTableView setTarget:self];
-  [_itemTableView setDoubleAction:@selector(activateSelectedRow:)];
+  _itemTableView.target = self;
+  _itemTableView.doubleAction = @selector(activateSelectedRow:);
   
   [_groupScrollView setSynchronisedScrollView:_itemScrollView];
   [_itemScrollView setSynchronisedScrollView:_groupScrollView];
@@ -40,41 +64,57 @@
   [NSApp activateIgnoringOtherApps:YES];
 }
 
-- (void)activateAtIndex:(NSUInteger)index
+- (NSUInteger)itemIndexForRow:(NSUInteger)row
 {
-  QBTrack *track = [_tracksController trackAtIndex:index];
+  __block NSUInteger itemIndex = 0;
+  [_itemRows enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+    if (idx == row) {
+      *stop = YES;
+    } else {
+      itemIndex += 1;
+    }
+  }];
+  return itemIndex;
+}
+
+- (void)activateAtRow:(NSUInteger)row
+{
+  QBTrack *track = [_tracksController trackAtIndex:[self itemIndexForRow:row]];
   [track play];
+
   [self.window close];
-  [_searchField setStringValue:@""];
-  // Searching with an empty string to clears the tracksController and reloads the table
+  // Searching with an empty string clears the tracksController and reloads the table
+  _searchField.stringValue = @"";
   [self submitSearch:_searchField];
-  [_searchField becomeFirstResponder];
 }
 
 - (BOOL)rowInTableView:(NSTableView *) tableView IsDummy:(NSUInteger)row
 {
-  // We loop through the groups, each time adding the number of items to a count.
-  // If the number of items is less than the group height, the group has dummy rows so we add the number of them to the count.
-  // If the count exceeds the row number before adding dummy rows, row contains a real item.
-  // If the count exceeds the row number after adding dummy rows, row is a dummy row.
   if (tableView == _itemTableView) {
-    NSUInteger groupItemsCount;
-    NSUInteger totalRowsCount = 0;
-    for (NSDictionary *group in [_tracksController groups]) {
-      groupItemsCount = [group[@"count"] unsignedIntegerValue];
-      totalRowsCount += groupItemsCount;
-      if (totalRowsCount > row) {
-        return NO;
-      }
-      if (groupItemsCount < GROUP_ROW_HEIGHT) {
-        totalRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
-      }
-      if (totalRowsCount > row) {
-        return YES;
-      }
-    }
+    return [_dummyRows containsIndex:row];
   }
   return YES;
+}
+
+- (void) populateIndexSets
+{
+  NSMutableIndexSet *tempDummyRows = [[NSMutableIndexSet alloc] init];
+  NSMutableIndexSet *tempItemRows = [[NSMutableIndexSet alloc] init];
+  NSUInteger rowCount = 0;
+  NSUInteger groupItemsCount;
+  NSUInteger dummyRowCount;
+  for (NSDictionary *group in [_tracksController groups]) {
+    groupItemsCount = [group[@"count"] unsignedIntegerValue];
+    [tempItemRows addIndexesInRange:NSMakeRange(rowCount, groupItemsCount)];
+    rowCount += groupItemsCount;
+    if (groupItemsCount < kGroupRowHeight) {
+      dummyRowCount = kGroupRowHeight - groupItemsCount;
+      [tempDummyRows addIndexesInRange:NSMakeRange(rowCount, dummyRowCount)];
+      rowCount += dummyRowCount;
+    }
+  }
+  _dummyRows = [[NSIndexSet alloc] initWithIndexSet:tempDummyRows];
+  _itemRows = [[NSIndexSet alloc] initWithIndexSet:tempItemRows];
 }
 
 #pragma mark - IBAction
@@ -84,6 +124,7 @@
   // Start the spinner, perform the search, reload the data, stop the spinner.
   [_progressIndicator startAnimation:nil];
   [_tracksController searchWithString:[sender stringValue]];
+  [self populateIndexSets];
   [_groupTableView reloadData];
   [_itemTableView reloadData];
   [_progressIndicator stopAnimation:nil];
@@ -93,23 +134,23 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-  // Group cells are an integer number of item cells high, which are ITEM_ROW_HEIGHT high.
-  // If the group contains fewer items than GROUP_ROW_HEIGHT, the group cell is GROUP_ROW_HEIGHT item cells high.
+  // Group cells are an integer number of item cells high, which are kItemRowHeight high.
+  // If the group contains fewer items than kGroupRowHeight, the group cell is kGroupRowHeight item cells high.
   // If the group contains some higher number of items, the group cell is that number of item cells high.
   if (tableView == _groupTableView) {
     NSInteger numTracksForProperty = [_tracksController propertyAtIndexTrackCount:row];
-    if (numTracksForProperty < GROUP_ROW_HEIGHT) {
-      numTracksForProperty = GROUP_ROW_HEIGHT;
+    if (numTracksForProperty < kGroupRowHeight) {
+      numTracksForProperty = kGroupRowHeight;
     }
-    return numTracksForProperty*(ITEM_ROW_HEIGHT + ITEM_ROW_PADDING);
+    return numTracksForProperty*(kItemRowHeight + kItemRowPadding);
   } else {
-    return ITEM_ROW_HEIGHT;
+    return kItemRowHeight;
   }
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-  // We need to return the appropriate view for the column, already filled with data.
+  // We need to return the appropriate view for the column, filled with data.
   // If it's for the group column, fetch the group and fill the group cell.
   // If it's for the item column and the row is a dummy row, return nil as no view is needed.
   // If it's for the item column and the row is an item, fetch the item and fill the item cell.
@@ -126,29 +167,9 @@
     if ([self rowInTableView:tableView IsDummy:row]) {
       return nil;
     }
-    
-    NSString *cellViewStringValue;
-    NSUInteger groupItemsCount;
-    NSUInteger dummyRowsCount = 0;
-    NSUInteger totalRowsCount = 0;
-    NSUInteger trackNum;
-    for (NSDictionary *group in [_tracksController groups]) {
-      groupItemsCount = [group[@"count"] unsignedIntegerValue];
-      totalRowsCount += groupItemsCount;
-      if (totalRowsCount > row) {
-        trackNum = row - dummyRowsCount;
-        QBTrack *track = [_tracksController trackAtIndex:trackNum];
-        cellViewStringValue = [track valueForKey:[tableColumn identifier]];
-        break;
-      }
-      if (groupItemsCount < GROUP_ROW_HEIGHT) {
-        totalRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
-        dummyRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
-      }
-    }
-    
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
-    cellView.textField.stringValue = cellViewStringValue;
+    QBTrack *track = [_tracksController trackAtIndex:[self itemIndexForRow:row]];
+    cellView.textField.stringValue = [track valueForKey:[tableColumn identifier]];
     return cellView;
   }
   return nil;
@@ -164,20 +185,10 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-  // We need to add on dummy cells for groups containing fewer items than the height of the group cell.
   if (tableView == _groupTableView) {
     return [_tracksController groupCount];
   } else {
-    NSUInteger sumCount = 0;
-    NSUInteger groupItemCount;
-    for (NSDictionary *group in [_tracksController groups]) {
-      groupItemCount = [group[@"count"] unsignedIntegerValue];
-      sumCount += groupItemCount;
-      if (groupItemCount < GROUP_ROW_HEIGHT) {
-        sumCount += GROUP_ROW_HEIGHT  - groupItemCount;
-      }
-    }
-    return sumCount;
+    return [_dummyRows count] + [_itemRows count];
   }
 }
 
@@ -185,8 +196,7 @@
 
 - (void)activateSelectedRow:(NSTableView *)tableView
 {
-  // TODO we need to subtract dummy rows from this
-  [self activateAtIndex:[tableView selectedRow]];
+  [self activateAtRow:[tableView selectedRow]];
 }
 
 @end

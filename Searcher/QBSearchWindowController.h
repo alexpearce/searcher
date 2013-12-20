@@ -6,10 +6,6 @@
 //  Copyright (c) 2013 Alex Pearce. All rights reserved.
 //
 
-#define ITEM_ROW_HEIGHT 17
-#define ITEM_ROW_PADDING 2
-#define GROUP_ROW_HEIGHT 5
-
 #import <Cocoa/Cocoa.h>
 
 #import "QBTableView.h"
@@ -40,12 +36,17 @@
 - (void)focus;
 
 /**
+ * Return the index of the item in the tracks controller for the row in the table.
+ */
+- (NSUInteger)itemIndexForRow:(NSUInteger)row;
+
+/**
  * Play the track at the indexed row, close the window, clear the table and search field,
  * restore focus to the search field.
  *
  * @param index Index of the row to be activated
  */
-- (void)activateAtIndex:(NSUInteger)index;
+- (void)activateAtRow:(NSUInteger)row;
 
 /**
  * Is the row at index row in tableView a dummy row?
