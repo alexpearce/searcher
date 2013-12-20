@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Alex Pearce. All rights reserved.
 //
 
+#define GROUP_ROW_HEIGHT 5
+
 #import <Cocoa/Cocoa.h>
 
 #import "QBTableView.h"

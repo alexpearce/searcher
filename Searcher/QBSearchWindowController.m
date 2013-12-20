@@ -64,6 +64,9 @@
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
   NSInteger numTracksForProperty = [_tracksController propertyAtIndexTrackCount:row];
+  if (numTracksForProperty < GROUP_ROW_HEIGHT) {
+    numTracksForProperty = GROUP_ROW_HEIGHT;
+  }
   CGFloat rowHeight = numTracksForProperty*[_itemTableView rectOfRow:0].size.height;
   return rowHeight - [_itemTableView intercellSpacing].height;
 }
@@ -89,7 +92,16 @@
   if (tableView == _groupTableView) {
     return [_tracksController groupCount];
   } else {
-    return [_tracksController trackCount];
+    NSUInteger sumCount = 0;
+    NSUInteger groupItemCount;
+    for (NSDictionary *group in [_tracksController groups]) {
+      groupItemCount = [group[@"count"] unsignedIntegerValue];
+      sumCount += groupItemCount;
+      if (groupItemCount < GROUP_ROW_HEIGHT) {
+        sumCount += GROUP_ROW_HEIGHT  - groupItemCount;
+      }
+    }
+    return sumCount;
   }
 }
 
@@ -98,9 +110,30 @@
   if (tableView == _groupTableView) {
     return [_tracksController groupAtIndex:row];
   } else {
-    QBTrack *track = [_tracksController trackAtIndex:row];
-    return [track valueForKey:[tableColumn identifier]];
+    NSUInteger groupItemsCount;
+    NSUInteger dummyRowsCount = 0;
+    NSUInteger totalRowsCount = 0;
+    NSUInteger trackNum;
+    for (NSDictionary *group in [_tracksController groups]) {
+      groupItemsCount = [group[@"count"] unsignedIntegerValue];
+      totalRowsCount += groupItemsCount;
+      if (totalRowsCount > row) {
+        trackNum = row - dummyRowsCount;
+        QBTrack *track = [_tracksController trackAtIndex:trackNum];
+        return [track valueForKey:[tableColumn identifier]];
+      }
+      if (groupItemsCount < GROUP_ROW_HEIGHT) {
+        totalRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
+        dummyRowsCount += GROUP_ROW_HEIGHT - groupItemsCount;
+      }
+      // If, after we add the dummy rows to the total count, we're over the row count, we're on a dummy row
+      if (totalRowsCount > row) {
+        return @"";
+      }
+    }
   }
+  // We shouldn't reach here
+  return @"";
 }
 
 #pragma mark - QBTableViewDataSource
