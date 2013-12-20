@@ -10,6 +10,7 @@
                 <outlet property="groupTableView" destination="MG5-K6-bkL" id="UB5-bI-Lvd"/>
                 <outlet property="itemScrollView" destination="tOV-aj-Fyb" id="0xE-2J-fow"/>
                 <outlet property="itemTableView" destination="3Di-XM-vhP" id="Bd8-E8-d0G"/>
+                <outlet property="progressIndicator" destination="3Xc-Bj-Gza" id="Jmp-dp-c3n"/>
                 <outlet property="searchField" destination="vE1-c3-Wea" id="SqV-Ma-vE8"/>
                 <outlet property="window" destination="1" id="L8V-2p-yWj"/>
             </connections>
@@ -213,10 +214,20 @@
                             </connections>
                         </searchField>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="978DACD2-ECD4-4672-8186-37EB355F77B0" label="Progress" paletteLabel="Progress" tag="-1" id="Tdf-et-zyT">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="16" height="16"/>
+                        <size key="maxSize" width="16" height="16"/>
+                        <progressIndicator key="view" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="3Xc-Bj-Gza">
+                            <rect key="frame" x="18" y="14" width="16" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </progressIndicator>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="lxz-LV-PTi"/>
                     <toolbarItem reference="zlL-0W-sBD"/>
+                    <toolbarItem reference="Tdf-et-zyT"/>
                     <toolbarItem reference="lxz-LV-PTi"/>
                 </defaultToolbarItems>
             </toolbar>

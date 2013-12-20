@@ -26,6 +26,7 @@
 @interface QBSearchWindowController : NSWindowController <QBTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSSearchField *searchField;
+@property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (weak) IBOutlet QBSyncScrollView *groupScrollView;
 @property (weak) IBOutlet QBSyncScrollView *itemScrollView;
 @property (weak) IBOutlet NSTableView *groupTableView;

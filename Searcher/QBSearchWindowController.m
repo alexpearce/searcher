@@ -77,9 +77,11 @@
 
 - (IBAction)submitSearch:(id)sender
 {
+  [_progressIndicator startAnimation:nil];
   [_tracksController searchWithString:[sender stringValue]];
   [_groupTableView reloadData];
   [_itemTableView reloadData];
+  [_progressIndicator stopAnimation:nil];
 }
 
 #pragma mark - NSTableViewDelegate
