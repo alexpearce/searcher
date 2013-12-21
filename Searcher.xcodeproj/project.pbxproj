@@ -28,6 +28,7 @@
 		E5A3F2FB184E15E4006AFE30 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3F2DA184E15E4006AFE30 /* Cocoa.framework */; };
 		E5A3F303184E15E4006AFE30 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5A3F301184E15E4006AFE30 /* InfoPlist.strings */; };
 		E5A3F305184E15E4006AFE30 /* SearcherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A3F304184E15E4006AFE30 /* SearcherTests.m */; };
+		E5C3B689186653E70007A68A /* QBSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C3B688186653E70007A68A /* QBSearchField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		E5A3F300184E15E4006AFE30 /* SearcherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SearcherTests-Info.plist"; sourceTree = "<group>"; };
 		E5A3F302184E15E4006AFE30 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E5A3F304184E15E4006AFE30 /* SearcherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearcherTests.m; sourceTree = "<group>"; };
+		E5C3B687186653E70007A68A /* QBSearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBSearchField.h; sourceTree = "<group>"; };
+		E5C3B688186653E70007A68A /* QBSearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBSearchField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,8 @@
 				E59D05F0184FDEEF00377645 /* QBSearchWindowController.h */,
 				E59D05F1184FDEEF00377645 /* QBSearchWindowController.m */,
 				E59D05F2184FDEEF00377645 /* QBSearchWindowController.xib */,
+				E5C3B687186653E70007A68A /* QBSearchField.h */,
+				E5C3B688186653E70007A68A /* QBSearchField.m */,
 				E520F6BC1850FA7100782F81 /* QBSyncScrollView.h */,
 				E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */,
 				E50F7E7F18664F9400EDACBB /* QBGroupTableView.h */,
@@ -313,6 +318,7 @@
 				E520F6BE1850FA7100782F81 /* QBSyncScrollView.m in Sources */,
 				E58D383E184E1CAE004EDDA1 /* QBTracksController.m in Sources */,
 				E50F7E8118664F9400EDACBB /* QBGroupTableView.m in Sources */,
+				E5C3B689186653E70007A68A /* QBSearchField.m in Sources */,
 				E58441D71863947C00A1E8CA /* QBTableCellView.m in Sources */,
 				E5A3F2E7184E15E4006AFE30 /* main.m in Sources */,
 				E57C355F185122EF00830987 /* QBTrack.m in Sources */,

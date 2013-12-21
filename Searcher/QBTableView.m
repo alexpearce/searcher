@@ -23,6 +23,9 @@
     if ([[self dataSource] respondsToSelector:@selector(activateSelectedRow:)]) {
       [(id<QBTableViewDataSource>)[self dataSource] activateSelectedRow:self];
     }
+  } else if (keyCode == 126 && selectedRow == 0) {
+    // If we're on the first row and it's an up arrow key, cycle to the next first responder
+    [[self window] selectNextKeyView:self];
   } else {
     [super keyDown:theEvent];
   }
