@@ -1,8 +1,8 @@
 //
-//  QBSearchWindowController.h
+//  QBSearchViewController.h
 //  Searcher
 //
-//  Created by Alex Pearce on 04/12/2013.
+//  Created by Alex Pearce on 23/12/2013.
 //  Copyright (c) 2013 Alex Pearce. All rights reserved.
 //
 
@@ -14,12 +14,12 @@
 @class QBSyncScrollView;
 
 /**
- * Controller for the main search window, with a search field and results table.
+ * Controller for the main search view, with a search field and results table.
  * Also the data source for the results table.
  * It is the delegate for the group table view, but not for the track table view.
  * If this class is also the track table view delegate, because we implement tableView:viewForTableColumn:row: it would become a view-based table, but it is cell-based.
  */
-@interface QBSearchWindowController : NSWindowController <NSTextFieldDelegate, QBTableViewDataSource, NSTableViewDelegate>
+@interface QBSearchViewController : NSViewController <NSTextFieldDelegate, QBTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSSearchField *searchField;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
@@ -29,11 +29,6 @@
 @property (weak) IBOutlet QBTableView *itemTableView;
 
 @property (strong) QBTracksController *tracksController;
-
-/**
- * Focus the window in front of any other open apps, moving to its space if required.
- */
-- (void)focus;
 
 /**
  * Return the index of the item in the tracks controller for the row in the table.

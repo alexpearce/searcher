@@ -9,10 +9,17 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
 
-@class QBSearchWindowController;
+@class QBSearchViewController;
 
 @interface QBAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (strong) QBSearchWindowController *windowController;
+@property (weak) IBOutlet NSWindow *window;
+
+@property (strong) QBSearchViewController *viewController;
+
+/**
+ * Focus the window in front of any other open apps, moving to its space if required.
+ */
+- (void)focus;
 
 @end

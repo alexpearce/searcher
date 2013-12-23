@@ -1,12 +1,12 @@
 //
-//  QBSearchWindowController.m
+//  QBSearchViewController.m
 //  Searcher
 //
-//  Created by Alex Pearce on 04/12/2013.
+//  Created by Alex Pearce on 23/12/2013.
 //  Copyright (c) 2013 Alex Pearce. All rights reserved.
 //
 
-#import "QBSearchWindowController.h"
+#import "QBSearchViewController.h"
 #import "QBSyncScrollView.h"
 #import "QBTableRowView.h"
 #import "QBTableCellView.h"
@@ -21,7 +21,7 @@ static CGFloat kItemRowHeight = 17.;
 static CGFloat kItemRowPadding = 2.;
 
 // Private properties and methods.
-@interface QBSearchWindowController ()
+@interface QBSearchViewController ()
 /**
  * Row indicies containing dummy rows.
  */
@@ -37,20 +37,21 @@ static CGFloat kItemRowPadding = 2.;
 - (void)populateIndexSets;
 @end
 
-@implementation QBSearchWindowController
+@implementation QBSearchViewController
 
-- (id)initWithWindow:(NSWindow *)window
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-  if (self = [super initWithWindow:window]) {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
     _tracksController = [[QBTracksController alloc] init];
   }
   return self;
 }
 
-- (void)windowDidLoad
+- (void)awakeFromNib
 {
-  [super windowDidLoad];
-
+  [super awakeFromNib];
+  
   _itemTableView.target = self;
   _itemTableView.doubleAction = @selector(activateSelectedRow:);
   
@@ -58,11 +59,9 @@ static CGFloat kItemRowPadding = 2.;
   [_itemScrollView setSynchronisedScrollView:_groupScrollView];
 }
 
-- (void)focus
+- (BOOL)acceptsFirstResponder
 {
-  [self.window makeKeyAndOrderFront:nil];
-  [_searchField becomeFirstResponder];
-  [NSApp activateIgnoringOtherApps:YES];
+  return YES;
 }
 
 - (NSUInteger)itemIndexForRow:(NSUInteger)row
@@ -82,8 +81,8 @@ static CGFloat kItemRowPadding = 2.;
 {
   QBTrack *track = [_tracksController trackAtIndex:[self itemIndexForRow:row]];
   [track play];
-
-  [self.window close];
+  
+  [self.view.window close];
   // Searching with an empty string clears the tracksController and reloads the table
   _searchField.stringValue = @"";
   [self submitSearch:_searchField];
@@ -138,7 +137,7 @@ static CGFloat kItemRowPadding = 2.;
 {
   if (commandSelector == @selector(moveDown:)) {
     // For some reason NSWindow's selectNextKeyView: fails to change the first responder here
-    [self.window makeFirstResponder:[control nextValidKeyView]];
+    [self.view.window makeFirstResponder:[control nextValidKeyView]];
     return YES;
   }
   return NO;

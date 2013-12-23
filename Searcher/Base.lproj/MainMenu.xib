@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
@@ -649,7 +649,22 @@ Gw
                 </menuItem>
             </items>
         </menu>
-        <customObject id="494" customClass="QBAppDelegate"/>
+        <customObject id="494" customClass="QBAppDelegate">
+            <connections>
+                <outlet property="window" destination="Wt3-sf-xjJ" id="t92-Ku-QB8"/>
+            </connections>
+        </customObject>
         <customObject id="420" customClass="NSFontManager"/>
+        <window title="Searcher" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="Wt3-sf-xjJ">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <rect key="contentRect" x="109" y="138" width="380" height="320"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
+            <value key="minSize" type="size" width="420" height="360"/>
+            <value key="maxSize" type="size" width="420" height="360"/>
+            <view key="contentView" id="dSt-od-OnJ">
+                <rect key="frame" x="0.0" y="0.0" width="380" height="320"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+        </window>
     </objects>
 </document>

@@ -7,14 +7,16 @@
 //
 
 #import "QBAppDelegate.h"
-#import "QBSearchWindowController.h"
+#import "QBSearchViewController.h"
 
 @implementation QBAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-  _windowController = [[QBSearchWindowController alloc] initWithWindowNibName:@"QBSearchWindowController"];
-  [_windowController showWindow:self];
+  _viewController = [[QBSearchViewController alloc] initWithNibName:@"QBSearchViewController" bundle:nil];
+  _window.contentView = _viewController.view;
+  // For some reason NSWindow's setInitialFirstResponder: doesn't focus the searchField on launch
+  [_viewController.searchField becomeFirstResponder];
 
   // Register global hotkey
   EventHotKeyRef gMyHotKeyRef;
@@ -32,15 +34,24 @@
 OSStatus myHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void *userData)
 {
   QBAppDelegate *self = (__bridge QBAppDelegate *)userData;
-  [self.windowController focus];
+  [self focus];
   return noErr;
 }
+
+- (void)focus
+{
+  [_window makeKeyAndOrderFront:nil];
+  [_viewController.searchField becomeFirstResponder];
+  [NSApp activateIgnoringOtherApps:YES];
+}
+
 
 #pragma mark - NSApplicationDelegate
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-  [_windowController focus];
+  [self focus];
   return YES;
 }
+
 @end
