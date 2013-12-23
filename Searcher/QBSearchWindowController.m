@@ -131,6 +131,18 @@ static CGFloat kItemRowPadding = 2.;
   [[_itemScrollView contentView] scrollToPoint:NSZeroPoint];
 }
 
+#pragma mark - NSTextFieldDelegate
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+  if (commandSelector == @selector(moveDown:)) {
+    // For some reason NSWindow's selectNextKeyView: fails to change the first responder here
+    [self.window makeFirstResponder:[control nextValidKeyView]];
+    return YES;
+  }
+  return NO;
+}
+
 #pragma mark - NSTableViewDelegate
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row

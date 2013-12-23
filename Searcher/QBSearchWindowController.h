@@ -19,7 +19,7 @@
  * It is the delegate for the group table view, but not for the track table view.
  * If this class is also the track table view delegate, because we implement tableView:viewForTableColumn:row: it would become a view-based table, but it is cell-based.
  */
-@interface QBSearchWindowController : NSWindowController <QBTableViewDataSource, NSTableViewDelegate>
+@interface QBSearchWindowController : NSWindowController <NSTextFieldDelegate, QBTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSSearchField *searchField;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
