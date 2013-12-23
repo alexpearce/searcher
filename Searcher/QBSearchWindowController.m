@@ -138,7 +138,7 @@ static CGFloat kItemRowPadding = 2.;
   // If the group contains fewer items than kGroupRowHeight, the group cell is kGroupRowHeight item cells high.
   // If the group contains some higher number of items, the group cell is that number of item cells high.
   if (tableView == _groupTableView) {
-    NSInteger numTracksForProperty = [_tracksController propertyAtIndexTrackCount:row];
+    NSInteger numTracksForProperty = [_tracksController trackCountForGroupIndex:row];
     if (numTracksForProperty < kGroupRowHeight) {
       numTracksForProperty = kGroupRowHeight;
     }

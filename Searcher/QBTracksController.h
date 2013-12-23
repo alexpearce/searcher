@@ -24,7 +24,6 @@
 @property (strong, readonly) iTunesPlaylist *music;
 @property (copy, readonly) NSArray *tracks;
 @property (copy, readonly) NSArray *groups;
-@property (copy, readonly) NSString *groupPropertyKey;
 
 /**
  * Populate the controller with results.
@@ -49,18 +48,18 @@
 /**
  * Return the number of tracks.
  */
-- (NSInteger)trackCount;
+- (NSUInteger)trackCount;
 
 /**
- * Return the number of tracks which belong to the given grouping property, i.e. the number of tracks in the group.
+ * Return the number of tracks which belong to the indexed group.
+ * @param index Index of the group
  */
-//- (NSInteger)trackAtIndex:(NSUInteger)index HasPropertyCount:(NSString *)propertyValue;
-- (NSInteger)propertyAtIndexTrackCount:(NSUInteger)index;
+- (NSUInteger)trackCountForGroupIndex:(NSUInteger)index;
 
 /**
  * Return the number of groups.
  */
-- (NSInteger)groupCount;
+- (NSUInteger)groupCount;
 
 /**
  * Clear the tracks and groups in the controller.

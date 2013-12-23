@@ -11,9 +11,14 @@
 
 #import "iTunes.h"
 
-@interface QBTracksController ()
+static NSString *kGroupPropertyKey = @"album";
+static NSString *kPlaceholderImageURL = @"/System/Library/Frameworks/QuickLook.framework/Resources/Generic Artwork 128.png";
 
-- (NSDictionary *)createGroupFromTrack:(iTunesTrack *)track length:(NSUInteger)length;
+@interface QBTracksController () {
+  NSImage *_placeholderImage;
+}
+
+- (NSDictionary *)createGroupFromTrack:(QBTrack *)track length:(NSUInteger)length;
 
 @end
 
@@ -32,33 +37,22 @@
         }
       }
     }
-    if (!_music) {
-      NSLog(@"Could not find Music playlist");
-    }
-    _tracks = [[NSArray alloc] init];
-    _groups = [[NSArray alloc] init];
-    _groupPropertyKey = @"album";
+    NSAssert(_music, @"Could not find iTunes Music playlist.");
+    _placeholderImage = [[NSImage alloc] initWithContentsOfFile:kPlaceholderImageURL];
+    [self clear];
   }
   return self;
 }
 
-- (NSDictionary *)createGroupFromTrack:(iTunesTrack *)track length:(NSUInteger)length
+- (NSDictionary *)createGroupFromTrack:(QBTrack *)track length:(NSUInteger)length
 {
-  SBElementArray *trackArtworks = [track artworks];
-  iTunesArtwork *artwork;
-  NSImage *placeholder = [[NSImage alloc] initWithContentsOfFile:@"/System/Library/Frameworks/QuickLook.framework/Resources/Generic Artwork 128.png"];
-  NSImage *image = nil;
-  
-  if ([trackArtworks count] > 0) {
-    // TODO: is there a problem using the first element? Would it ever be != 0?
-    artwork = [trackArtworks objectAtIndex:0];
-    // Sometimes [iTunesArtwork data] sometimes returns an NSAppleEventDescriptor, so we explictly create an NSImage using the raw data
-    // @see http://stackoverflow.com/questions/7035350
-    image = [[NSImage alloc] initWithData:[artwork rawData]];
+  NSImage *image;
+  if (track.imageData) {
+    image = [[NSImage alloc] initWithData:track.imageData];
   }
-  if (image == nil) {
-    // If there's no artwork for the song, or initWithData: failed, use the placeholder
-    image = placeholder;
+  // If there's no artwork for the track, or initWithData: failed, use the placeholder
+  if (!image) {
+    image = _placeholderImage;
   }
   return @{
            @"album": track.album,
@@ -71,43 +65,42 @@
 - (void)searchWithString:(NSString *)query
 {
   // The SBElementArray contains iTunesTracks, which are references to the objects.
-  SBElementArray *resultReferences = [_music searchFor:query only:iTunesESrAAll];
-  // By sending get, we force the evaluation of the object.
-  // This is more efficient than looping over the SBElementArray with fast enumeration, which makes one apple event per loop, as only one event is sent.
-  NSArray *results = [resultReferences arrayByApplyingSelector:@selector(get)];
+  SBElementArray *results = [_music searchFor:query only:iTunesESrAAll];
+  NSUInteger resultsCount = [results count];
   
   NSString *trackGroupProperty;
   NSUInteger groupCount = 0;
-  NSMutableArray *theTracks = [NSMutableArray arrayWithCapacity:results.count];
+  QBTrack *currentTrack;
+  QBTrack *previousTrack;
+  NSMutableArray *theTracks = [NSMutableArray arrayWithCapacity:resultsCount];
   NSMutableArray *theGroups = [NSMutableArray array];
   
   // Keep track of the current group property to build groups.
-  // Set an (probably) unique property so we don't match the first search result.
+  // Set a (probably) unique property so we don't match the first search result.
   NSString *currentGroup = @"F4WeSPfCVw";
-  NSUInteger index = 0;
   for (iTunesTrack *track in results) {
-    trackGroupProperty = [track valueForKey:_groupPropertyKey];
+    currentTrack = [[QBTrack alloc] initWithiTunesTrack:track];
+    trackGroupProperty = [currentTrack valueForKey:kGroupPropertyKey];
     
     // If the group property has changed, we've just past a "group boundary", so add a group element
     // for the group we've just left.
     // Otherwise, we're still inside the group, so increment the count
     if (![currentGroup isEqualToString:trackGroupProperty]) {
-      // If the group count is zero
       if (groupCount > 0) {
-        [self createGroupFromTrack:track length:groupCount];
-        [theGroups addObject:[self createGroupFromTrack:results[index - 1] length:groupCount]];
+        [theGroups addObject:[self createGroupFromTrack:previousTrack length:groupCount]];
       }
       currentGroup = trackGroupProperty;
       groupCount = 1;
     } else {
       groupCount += 1;
     }
-    // Add the group from the last track
-    [theTracks addObject:[[QBTrack alloc] initWithiTunesTrack:track]];
-    index += 1;
-    if (index == [results count]) {
-      [theGroups addObject:[self createGroupFromTrack:track length:groupCount]];
-    }
+
+    [theTracks addObject:currentTrack];
+    previousTrack = currentTrack;
+  }
+  // Add the group from the last track (if there is one)
+  if (currentTrack) {
+    [theGroups addObject:[self createGroupFromTrack:currentTrack length:groupCount]];
   }
   _groups = [NSArray arrayWithArray:theGroups];
   _tracks = [NSArray arrayWithArray:theTracks];
@@ -123,26 +116,26 @@
   return _tracks[index];
 }
 
-- (NSInteger)trackCount
+- (NSUInteger)trackCount
 {
   return [_tracks count];
 }
 
-- (NSInteger)propertyAtIndexTrackCount:(NSUInteger)index
+- (NSUInteger)trackCountForGroupIndex:(NSUInteger)index
 {
-  // It may be that the group property is disjoint in the search results, that is identical values may not occur sequentially.
-  // Then, there are groups with duplicate property names.
-  // To work around this, we count the number of tracks a group has
-  return [_groups[index][@"count"] unsignedIntegerValue];
+  NSDictionary *group = [self groupAtIndex:index];
+  return [group[@"count"] unsignedIntegerValue];
 }
 
-- (NSInteger)groupCount
+- (NSUInteger)groupCount
 {
   return [_groups count];
 }
 
 - (void)clear
 {
+  _tracks = nil;
+  _groups = nil;
   _tracks = [NSArray array];
   _groups = [NSArray array];
 }

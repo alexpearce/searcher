@@ -20,6 +20,7 @@
 @property (copy) NSString *artist;
 @property (copy) NSString *album;
 @property (copy) NSString *title;
+@property (copy) NSData *imageData;
 @property (strong) iTunesTrack *obj;
 
 - (id)initWithiTunesTrack:(iTunesTrack *)track;
