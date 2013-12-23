@@ -8,6 +8,7 @@
 
 #import "QBSearchWindowController.h"
 #import "QBSyncScrollView.h"
+#import "QBTableRowView.h"
 #import "QBTableCellView.h"
 #import "QBTracksController.h"
 #import "QBTrack.h"
@@ -186,6 +187,12 @@ static CGFloat kItemRowPadding = 2.;
     return cellView;
   }
   return nil;
+}
+
+- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
+{
+  // Returning a custom row view allows us to change its features, like highlight colour
+  return [[QBTableRowView alloc] init];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row

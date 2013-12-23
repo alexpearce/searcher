@@ -30,7 +30,7 @@
                     <scrollView borderType="none" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="NCD-J0-bwu" customClass="QBSyncScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="160" height="380"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" id="GUC-Js-TfR">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="GUC-Js-TfR">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="380"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -122,7 +122,7 @@
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="NNv-oX-WuI" customClass="QBSyncScrollView">
                         <rect key="frame" x="160" y="0.0" width="260" height="380"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" id="CVK-cV-d7e">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="CVK-cV-d7e">
                             <rect key="frame" x="0.0" y="0.0" width="260" height="380"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>

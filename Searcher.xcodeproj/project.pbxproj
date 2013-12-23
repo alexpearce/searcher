@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E50F7E8118664F9400EDACBB /* QBGroupTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E50F7E8018664F9400EDACBB /* QBGroupTableView.m */; };
+		E51A240A1868473C00E77020 /* QBTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = E51A24091868473C00E77020 /* QBTableRowView.m */; };
+		E51A240E1868533200E77020 /* README in Resources */ = {isa = PBXBuildFile; fileRef = E51A240D1868533200E77020 /* README */; };
+		E51A2410186854CF00E77020 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E51A240F186854CF00E77020 /* LICENSE */; };
 		E520F6BE1850FA7100782F81 /* QBSyncScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */; };
 		E57C355F185122EF00830987 /* QBTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = E57C355E185122EF00830987 /* QBTrack.m */; };
 		E58441D71863947C00A1E8CA /* QBTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58441D61863947C00A1E8CA /* QBTableCellView.m */; };
@@ -43,6 +46,10 @@
 /* Begin PBXFileReference section */
 		E50F7E7F18664F9400EDACBB /* QBGroupTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBGroupTableView.h; sourceTree = "<group>"; };
 		E50F7E8018664F9400EDACBB /* QBGroupTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBGroupTableView.m; sourceTree = "<group>"; };
+		E51A24081868473C00E77020 /* QBTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTableRowView.h; sourceTree = "<group>"; };
+		E51A24091868473C00E77020 /* QBTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBTableRowView.m; sourceTree = "<group>"; };
+		E51A240D1868533200E77020 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = SOURCE_ROOT; };
+		E51A240F186854CF00E77020 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		E520F6BC1850FA7100782F81 /* QBSyncScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBSyncScrollView.h; sourceTree = "<group>"; };
 		E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBSyncScrollView.m; sourceTree = "<group>"; };
 		E57C355D185122EF00830987 /* QBTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTrack.h; sourceTree = "<group>"; };
@@ -112,6 +119,8 @@
 				E50F7E8018664F9400EDACBB /* QBGroupTableView.m */,
 				E58D3844184E205E004EDDA1 /* QBTableView.h */,
 				E58D3845184E205E004EDDA1 /* QBTableView.m */,
+				E51A24081868473C00E77020 /* QBTableRowView.h */,
+				E51A24091868473C00E77020 /* QBTableRowView.m */,
 				E58441D51863947C00A1E8CA /* QBTableCellView.h */,
 				E58441D61863947C00A1E8CA /* QBTableCellView.m */,
 			);
@@ -196,6 +205,8 @@
 				E5A3F2E6184E15E4006AFE30 /* main.m */,
 				E5A3F2E8184E15E4006AFE30 /* Searcher-Prefix.pch */,
 				E5A3F2E9184E15E4006AFE30 /* Credits.rtf */,
+				E51A240D1868533200E77020 /* README */,
+				E51A240F186854CF00E77020 /* LICENSE */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -295,8 +306,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E51A240E1868533200E77020 /* README in Resources */,
 				E5A3F2E5184E15E4006AFE30 /* InfoPlist.strings in Resources */,
 				E59D05F4184FDEEF00377645 /* QBSearchWindowController.xib in Resources */,
+				E51A2410186854CF00E77020 /* LICENSE in Resources */,
 				E5A3F2F3184E15E4006AFE30 /* Images.xcassets in Resources */,
 				E5A3F2EB184E15E4006AFE30 /* Credits.rtf in Resources */,
 				E5A3F2F1184E15E4006AFE30 /* MainMenu.xib in Resources */,
@@ -327,6 +340,7 @@
 				E58D3846184E205E004EDDA1 /* QBTableView.m in Sources */,
 				E5A3F2EE184E15E4006AFE30 /* QBAppDelegate.m in Sources */,
 				E59D05F3184FDEEF00377645 /* QBSearchWindowController.m in Sources */,
+				E51A240A1868473C00E77020 /* QBTableRowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
