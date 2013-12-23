@@ -106,6 +106,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E51A24071866609B00E77020 /* Tables */ = {
+			isa = PBXGroup;
+			children = (
+				E520F6BC1850FA7100782F81 /* QBSyncScrollView.h */,
+				E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */,
+				E50F7E7F18664F9400EDACBB /* QBGroupTableView.h */,
+				E50F7E8018664F9400EDACBB /* QBGroupTableView.m */,
+				E58D3844184E205E004EDDA1 /* QBTableView.h */,
+				E58D3845184E205E004EDDA1 /* QBTableView.m */,
+				E58441D51863947C00A1E8CA /* QBTableCellView.h */,
+				E58441D61863947C00A1E8CA /* QBTableCellView.m */,
+			);
+			name = Tables;
+			sourceTree = "<group>";
+		};
 		E58D3838184E1C64004EDDA1 /* iTunes */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,14 +185,7 @@
 				E59D05F2184FDEEF00377645 /* QBSearchWindowController.xib */,
 				E5C3B687186653E70007A68A /* QBSearchField.h */,
 				E5C3B688186653E70007A68A /* QBSearchField.m */,
-				E520F6BC1850FA7100782F81 /* QBSyncScrollView.h */,
-				E520F6BD1850FA7100782F81 /* QBSyncScrollView.m */,
-				E50F7E7F18664F9400EDACBB /* QBGroupTableView.h */,
-				E50F7E8018664F9400EDACBB /* QBGroupTableView.m */,
-				E58D3844184E205E004EDDA1 /* QBTableView.h */,
-				E58D3845184E205E004EDDA1 /* QBTableView.m */,
-				E58441D51863947C00A1E8CA /* QBTableCellView.h */,
-				E58441D61863947C00A1E8CA /* QBTableCellView.m */,
+				E51A24071866609B00E77020 /* Tables */,
 				E5A3F2F2184E15E4006AFE30 /* Images.xcassets */,
 				E5A3F2E1184E15E4006AFE30 /* Supporting Files */,
 				E58D3838184E1C64004EDDA1 /* iTunes */,

@@ -121,13 +121,14 @@ static CGFloat kItemRowPadding = 2.;
 
 - (IBAction)submitSearch:(id)sender
 {
-  // Start the spinner, perform the search, reload the data, stop the spinner.
+  // Start the spinner, perform the search, reload the data, stop the spinner, scroll to top
   [_progressIndicator startAnimation:nil];
   [_tracksController searchWithString:[sender stringValue]];
   [self populateIndexSets];
   [_groupTableView reloadData];
   [_itemTableView reloadData];
   [_progressIndicator stopAnimation:nil];
+  [[_itemScrollView contentView] scrollToPoint:NSZeroPoint];
 }
 
 #pragma mark - NSTableViewDelegate
