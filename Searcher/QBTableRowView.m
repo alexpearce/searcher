@@ -31,9 +31,8 @@
 {
   if (self.selectionHighlightStyle != NSTableViewSelectionHighlightStyleNone) {
     NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:_startingColor endingColor:_endingColor];
-    NSBezierPath *selectionPath = [NSBezierPath bezierPathWithRect:dirtyRect];
     // 90 degree gradient, startingColor to endingColor from top to bottom
-    [gradient drawInBezierPath:selectionPath angle:90.];
+    [gradient drawInRect:dirtyRect angle:90];
   }
 }
 
