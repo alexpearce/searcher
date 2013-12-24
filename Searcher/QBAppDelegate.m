@@ -15,7 +15,7 @@
 {
   _viewController = [[QBSearchViewController alloc] initWithNibName:@"QBSearchViewController" bundle:nil];
   _window.contentView = _viewController.view;
-  // For some reason NSWindow's setInitialFirstResponder: doesn't focus the searchField on launch
+  // For some reason NSWindow's setInitialFirstResponder: doesn't focus the searchField on launch, so do it manually
   [_viewController.searchField becomeFirstResponder];
 
   // Register global hotkey

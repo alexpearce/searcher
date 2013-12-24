@@ -15,9 +15,7 @@
 
 /**
  * Controller for the main search view, with a search field and results table.
- * Also the data source for the results table.
- * It is the delegate for the group table view, but not for the track table view.
- * If this class is also the track table view delegate, because we implement tableView:viewForTableColumn:row: it would become a view-based table, but it is cell-based.
+ * It is the data source and delegate for both group and item view-based tables.
  */
 @interface QBSearchViewController : NSViewController <NSTextFieldDelegate, QBTableViewDataSource, NSTableViewDelegate>
 

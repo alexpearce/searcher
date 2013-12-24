@@ -169,7 +169,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="-2" id="xJY-ua-5Mv"/>
                                     <outlet property="delegate" destination="-2" id="LnJ-zo-NLq"/>
-                                    <outlet property="nextKeyView" destination="IiX-J1-Z5C" id="Kge-k6-NDm"/>
+                                    <outlet property="nextKeyView" destination="IiX-J1-Z5C" id="Cs8-gF-KAR"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -195,7 +195,7 @@
                     <connections>
                         <action selector="submitSearch:" target="-2" id="ijY-9W-Pc1"/>
                         <outlet property="delegate" destination="-2" id="QCR-ag-Fti"/>
-                        <outlet property="nextKeyView" destination="tQy-uS-4t6" id="a3Z-H6-t2L"/>
+                        <outlet property="nextKeyView" destination="tQy-uS-4t6" id="xFt-g5-zGZ"/>
                     </connections>
                 </searchField>
                 <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Aqr-77-XXK">

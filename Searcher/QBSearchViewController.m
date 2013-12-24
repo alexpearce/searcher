@@ -137,7 +137,7 @@ static CGFloat kItemRowPadding = 2.;
 {
   if (commandSelector == @selector(moveDown:)) {
     // For some reason NSWindow's selectNextKeyView: fails to change the first responder here
-    [self.view.window makeFirstResponder:[control nextValidKeyView]];
+    [self.view.window selectKeyViewFollowingView:control];
     return YES;
   }
   return NO;
