@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "QBTableView.h"
+#import "QBMusicSource.h"
 
 @class QBiTunesController;
 @class QBSyncScrollView;
@@ -26,7 +27,8 @@
 @property (weak) IBOutlet NSTableView *groupTableView;
 @property (weak) IBOutlet QBTableView *itemTableView;
 
-@property (strong) QBiTunesController *tracksController;
+@property (strong) NSArray *sourceControllers;
+@property (weak) id<QBMusicSource> selectedSource;
 
 /**
  * Return the index of the item in the tracks controller for the row in the table.

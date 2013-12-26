@@ -115,8 +115,11 @@
                     </scroller>
                 </scrollView>
                 <searchField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IiX-J1-Z5C">
-                    <rect key="frame" x="80" y="338" width="260" height="22"/>
+                    <rect key="frame" x="120" y="338" width="180" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="gr4-dl-1dT"/>
+                    </constraints>
                     <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Search…  " usesSingleLineMode="YES" bezelStyle="round" id="F7u-G5-CRt">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -129,7 +132,7 @@
                     </connections>
                 </searchField>
                 <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Aqr-77-XXK">
-                    <rect key="frame" x="348" y="341" width="16" height="16"/>
+                    <rect key="frame" x="328" y="341" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="MIW-Gu-zMb" customClass="QBSyncScrollView">
@@ -206,23 +209,54 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KF1-Wf-WuA">
+                    <rect key="frame" x="26" y="336" width="73" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="68" id="dvf-bz-7AT"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" inset="2" id="OCS-zi-tuY">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" title="OtherViews" id="TTL-uY-v08">
+                            <items>
+                                <menuItem title="Source" id="sLg-ZL-scU"/>
+                                <menuItem title="Item 2" id="5oq-wu-sst"/>
+                                <menuItem title="Item 3" id="azk-Ad-MCt"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="iTD-Vc-gGG" name="content" keyPath="arrangedObjects" id="6Va-QD-sYO"/>
+                        <binding destination="iTD-Vc-gGG" name="contentObjects" keyPath="arrangedObjects.controller" previousBinding="6Va-QD-sYO" id="5rU-rK-Vpm"/>
+                        <binding destination="iTD-Vc-gGG" name="contentValues" keyPath="arrangedObjects.name" previousBinding="5rU-rK-Vpm" id="Gzd-47-nJD"/>
+                        <binding destination="-2" name="selectedObject" keyPath="self.selectedSource" previousBinding="Gzd-47-nJD" id="HWV-rb-tDu"/>
+                    </connections>
+                </popUpButton>
             </subviews>
             <constraints>
+                <constraint firstItem="IiX-J1-Z5C" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="2kv-Az-vge"/>
                 <constraint firstAttribute="trailing" secondItem="MIW-Gu-zMb" secondAttribute="trailing" id="7gj-xG-Gwf"/>
+                <constraint firstItem="IiX-J1-Z5C" firstAttribute="centerY" secondItem="Aqr-77-XXK" secondAttribute="centerY" id="AOF-Nz-0Rc"/>
                 <constraint firstItem="MIW-Gu-zMb" firstAttribute="leading" secondItem="obD-xg-ujB" secondAttribute="trailing" id="DLr-u5-wmv"/>
                 <constraint firstItem="MIW-Gu-zMb" firstAttribute="bottom" secondItem="obD-xg-ujB" secondAttribute="bottom" id="Ibi-hX-fxE"/>
                 <constraint firstItem="MIW-Gu-zMb" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="160" id="Oz9-Me-itI"/>
-                <constraint firstItem="obD-xg-ujB" firstAttribute="top" secondItem="IiX-J1-Z5C" secondAttribute="bottom" constant="16" id="TWD-dU-mZq"/>
-                <constraint firstItem="IiX-J1-Z5C" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="VgY-bM-0M9"/>
-                <constraint firstItem="IiX-J1-Z5C" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="a18-Kd-bk8"/>
+                <constraint firstItem="MIW-Gu-zMb" firstAttribute="top" secondItem="IiX-J1-Z5C" secondAttribute="bottom" constant="16" id="PIl-lR-ZQm"/>
+                <constraint firstItem="IiX-J1-Z5C" firstAttribute="leading" secondItem="KF1-Wf-WuA" secondAttribute="trailing" constant="24" id="TfW-8i-lEa"/>
+                <constraint firstItem="IiX-J1-Z5C" firstAttribute="top" secondItem="KF1-Wf-WuA" secondAttribute="top" id="XsJ-vJ-z70"/>
+                <constraint firstItem="Aqr-77-XXK" firstAttribute="leading" secondItem="IiX-J1-Z5C" secondAttribute="trailing" constant="28" id="YJE-jt-8Uj"/>
                 <constraint firstItem="MIW-Gu-zMb" firstAttribute="top" secondItem="obD-xg-ujB" secondAttribute="top" id="cLl-ba-h09"/>
                 <constraint firstItem="obD-xg-ujB" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="d8g-Q4-do6"/>
-                <constraint firstItem="Aqr-77-XXK" firstAttribute="leading" secondItem="IiX-J1-Z5C" secondAttribute="trailing" constant="8" symbolic="YES" id="fwc-j6-HgT"/>
                 <constraint firstAttribute="bottom" secondItem="obD-xg-ujB" secondAttribute="bottom" id="iCL-up-a6j"/>
-                <constraint firstItem="IiX-J1-Z5C" firstAttribute="centerY" secondItem="Aqr-77-XXK" secondAttribute="centerY" id="mxS-Sp-amu"/>
-                <constraint firstItem="IiX-J1-Z5C" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="80" id="uc1-2u-op4"/>
+                <constraint firstItem="IiX-J1-Z5C" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="v0C-9B-xLM"/>
             </constraints>
         </customView>
+        <arrayController id="iTD-Vc-gGG">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="self.sourceControllers" id="9GB-82-rpA"/>
+            </connections>
+        </arrayController>
+        <userDefaultsController representsSharedInstance="YES" id="WlH-Yg-jru"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
