@@ -17,6 +17,8 @@
   _window.contentView = _viewController.view;
   // For some reason NSWindow's setInitialFirstResponder: doesn't focus the searchField on launch, so do it manually
   [_viewController.searchField becomeFirstResponder];
+  
+  _window.backgroundColor = [NSColor colorWithCalibratedRed:(50/255.) green:(53/255.) blue:(61/255.) alpha:1];
 
   // Register global hotkey
   EventHotKeyRef gMyHotKeyRef;

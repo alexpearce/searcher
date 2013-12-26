@@ -23,6 +23,8 @@
   if (self = [super init]) {
     _startingColor = [NSColor colorWithCalibratedRed:(56/255.) green:(93/255.) blue:(244/255.) alpha:1];
     _endingColor = [NSColor colorWithCalibratedRed:(6/255.) green:(48/255.) blue:(241/255.) alpha:1];
+    _startingColor = [NSColor colorWithCalibratedRed:(216/255.) green:(223/255.) blue:(238/255.) alpha:1];
+    _endingColor = _startingColor;
   }
   return self;
 }

@@ -657,12 +657,12 @@ Gw
         <customObject id="420" customClass="NSFontManager"/>
         <window title="Searcher" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="Wt3-sf-xjJ">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="109" y="138" width="380" height="320"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
+            <rect key="contentRect" x="109" y="138" width="420" height="320"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <value key="minSize" type="size" width="420" height="360"/>
             <value key="maxSize" type="size" width="420" height="360"/>
             <view key="contentView" id="dSt-od-OnJ">
-                <rect key="frame" x="0.0" y="0.0" width="380" height="320"/>
+                <rect key="frame" x="0.0" y="0.0" width="420" height="320"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
         </window>

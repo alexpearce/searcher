@@ -14,6 +14,8 @@
 		E5607B8E18688F1200C62A21 /* QBSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5607B8C18688F1200C62A21 /* QBSearchViewController.m */; };
 		E5607B8F18688F1200C62A21 /* QBSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5607B8D18688F1200C62A21 /* QBSearchViewController.xib */; };
 		E5607B931868960000C62A21 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E5607B921868960000C62A21 /* README.md */; };
+		E5757A8A186C4128008A89FB /* QBTrackGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E5757A89186C4128008A89FB /* QBTrackGroup.m */; };
+		E5757A8D186C484A008A89FB /* QBITunesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5757A8C186C484A008A89FB /* QBITunesController.m */; };
 		E57C355F185122EF00830987 /* QBTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = E57C355E185122EF00830987 /* QBTrack.m */; };
 		E58441D71863947C00A1E8CA /* QBTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58441D61863947C00A1E8CA /* QBTableCellView.m */; };
 		E58D383E184E1CAE004EDDA1 /* QBTracksController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58D383D184E1CAE004EDDA1 /* QBTracksController.m */; };
@@ -55,6 +57,11 @@
 		E5607B8C18688F1200C62A21 /* QBSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBSearchViewController.m; sourceTree = "<group>"; };
 		E5607B8D18688F1200C62A21 /* QBSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QBSearchViewController.xib; sourceTree = "<group>"; };
 		E5607B921868960000C62A21 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
+		E5757A87186C406C008A89FB /* QBMusicSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QBMusicSource.h; sourceTree = "<group>"; };
+		E5757A88186C4128008A89FB /* QBTrackGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTrackGroup.h; sourceTree = "<group>"; };
+		E5757A89186C4128008A89FB /* QBTrackGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBTrackGroup.m; sourceTree = "<group>"; };
+		E5757A8B186C484A008A89FB /* QBITunesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBITunesController.h; sourceTree = "<group>"; };
+		E5757A8C186C484A008A89FB /* QBITunesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBITunesController.m; sourceTree = "<group>"; };
 		E57C355D185122EF00830987 /* QBTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTrack.h; sourceTree = "<group>"; };
 		E57C355E185122EF00830987 /* QBTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBTrack.m; sourceTree = "<group>"; };
 		E58441D51863947C00A1E8CA /* QBTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBTableCellView.h; sourceTree = "<group>"; };
@@ -131,8 +138,13 @@
 			isa = PBXGroup;
 			children = (
 				E58D3837184E1C5C004EDDA1 /* iTunes.h */,
+				E5757A87186C406C008A89FB /* QBMusicSource.h */,
 				E57C355D185122EF00830987 /* QBTrack.h */,
 				E57C355E185122EF00830987 /* QBTrack.m */,
+				E5757A88186C4128008A89FB /* QBTrackGroup.h */,
+				E5757A89186C4128008A89FB /* QBTrackGroup.m */,
+				E5757A8B186C484A008A89FB /* QBITunesController.h */,
+				E5757A8C186C484A008A89FB /* QBITunesController.m */,
 				E58D383C184E1CAE004EDDA1 /* QBTracksController.h */,
 				E58D383D184E1CAE004EDDA1 /* QBTracksController.m */,
 			);
@@ -333,9 +345,11 @@
 			files = (
 				E520F6BE1850FA7100782F81 /* QBSyncScrollView.m in Sources */,
 				E58D383E184E1CAE004EDDA1 /* QBTracksController.m in Sources */,
+				E5757A8A186C4128008A89FB /* QBTrackGroup.m in Sources */,
 				E50F7E8118664F9400EDACBB /* QBGroupTableView.m in Sources */,
 				E58441D71863947C00A1E8CA /* QBTableCellView.m in Sources */,
 				E5A3F2E7184E15E4006AFE30 /* main.m in Sources */,
+				E5757A8D186C484A008A89FB /* QBITunesController.m in Sources */,
 				E57C355F185122EF00830987 /* QBTrack.m in Sources */,
 				E58D3846184E205E004EDDA1 /* QBTableView.m in Sources */,
 				E5A3F2EE184E15E4006AFE30 /* QBAppDelegate.m in Sources */,
