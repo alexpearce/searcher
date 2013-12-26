@@ -10,7 +10,7 @@
 
 #import "QBTableView.h"
 
-@class QBTracksController;
+@class QBiTunesController;
 @class QBSyncScrollView;
 
 /**
@@ -26,7 +26,7 @@
 @property (weak) IBOutlet NSTableView *groupTableView;
 @property (weak) IBOutlet QBTableView *itemTableView;
 
-@property (strong) QBTracksController *tracksController;
+@property (strong) QBiTunesController *tracksController;
 
 /**
  * Return the index of the item in the tracks controller for the row in the table.

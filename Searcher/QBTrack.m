@@ -11,28 +11,14 @@
 
 @implementation QBTrack
 
-- (id)initWithiTunesTrack:(iTunesTrack *)track
+- (instancetype)initWithArtist:(NSString *)artist album:(NSString *)album title:(NSString *)title
 {
   if (self = [super init]) {
-    _obj = track;
-    _artist = track.artist;
-    _album = track.album;
-    _title = track.name;
-    // Sometimes [iTunesArtwork data] sometimes returns an NSAppleEventDescriptor, so we explictly create an NSImage using the raw data
-    // @see http://stackoverflow.com/questions/7035350
-    SBElementArray *artworks = [track artworks];
-    if ([artworks count] > 0) {
-      _imageData = [artworks[0] rawData];
-    } else {
-      _imageData = nil;
-    }
+    self.artist = artist;
+    self.album = album;
+    self.title = title;
   }
   return self;
-}
-
-- (void)play
-{
-  [_obj playOnce:NO];
 }
 
 @end

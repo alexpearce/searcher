@@ -10,7 +10,8 @@
 #import "QBSyncScrollView.h"
 #import "QBTableRowView.h"
 #import "QBTableCellView.h"
-#import "QBTracksController.h"
+#import "QBiTunesController.h"
+#import "QBTrackGroup.h"
 #import "QBTrack.h"
 
 // Minimum number of item rows each group row should occupy
@@ -43,7 +44,7 @@ static CGFloat kItemRowPadding = 2.;
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _tracksController = [[QBTracksController alloc] init];
+    _tracksController = [[QBiTunesController alloc] init];
   }
   return self;
 }
@@ -79,8 +80,7 @@ static CGFloat kItemRowPadding = 2.;
 
 - (void)activateAtRow:(NSUInteger)row
 {
-  QBTrack *track = [_tracksController trackAtIndex:[self itemIndexForRow:row]];
-  [track play];
+  [_tracksController playTrackAtTrackIndex:[self itemIndexForRow:row]];
   
   [self.view.window close];
   // Searching with an empty string clears the tracksController and reloads the table
@@ -103,8 +103,8 @@ static CGFloat kItemRowPadding = 2.;
   NSUInteger rowCount = 0;
   NSUInteger groupItemsCount;
   NSUInteger dummyRowCount;
-  for (NSDictionary *group in [_tracksController groups]) {
-    groupItemsCount = [group[@"count"] unsignedIntegerValue];
+  for (QBTrackGroup *group in [_tracksController groupsArray]) {
+    groupItemsCount = group.trackCount;
     [tempItemRows addIndexesInRange:NSMakeRange(rowCount, groupItemsCount)];
     rowCount += groupItemsCount;
     if (groupItemsCount < kGroupRowHeight) {
@@ -151,7 +151,7 @@ static CGFloat kItemRowPadding = 2.;
   // If the group contains fewer items than kGroupRowHeight, the group cell is kGroupRowHeight item cells high.
   // If the group contains some higher number of items, the group cell is that number of item cells high.
   if (tableView == _groupTableView) {
-    NSInteger numTracksForProperty = [_tracksController trackCountForGroupIndex:row];
+    NSInteger numTracksForProperty = [_tracksController groupAtGroupIndex:row].trackCount;
     if (numTracksForProperty < kGroupRowHeight) {
       numTracksForProperty = kGroupRowHeight;
     }
@@ -171,17 +171,17 @@ static CGFloat kItemRowPadding = 2.;
   
   if ([columnIdentifier isEqualToString:@"group"]) {
     QBTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
-    NSDictionary *group = [_tracksController groupAtIndex:row];
-    cellView.imageView.image = group[@"image"];
-    cellView.textField.stringValue = group[@"artist"];
-    cellView.albumField.stringValue = group[@"album"];
+    QBTrackGroup *group = [_tracksController groupAtGroupIndex:row];
+    cellView.imageView.image = group.artwork;
+    cellView.textField.stringValue = group.artist;
+    cellView.albumField.stringValue = group.album;
     return cellView;
   } else if ([columnIdentifier isEqualToString:@"title"]) {
     if ([self rowInTableView:tableView IsDummy:row]) {
       return nil;
     }
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:columnIdentifier owner:self];
-    QBTrack *track = [_tracksController trackAtIndex:[self itemIndexForRow:row]];
+    QBTrack *track = [_tracksController trackAtTrackIndex:[self itemIndexForRow:row]];
     cellView.textField.stringValue = [track valueForKey:[tableColumn identifier]];
     return cellView;
   }

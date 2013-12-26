@@ -23,11 +23,6 @@
 @property (copy) NSData *imageData;
 @property (strong) iTunesTrack *obj;
 
-- (id)initWithiTunesTrack:(iTunesTrack *)track;
-
-/**
- * Send the playOnce: message to the iTunesTrack object.
- */
-- (void)play;
+- (instancetype)initWithArtist:(NSString *)artist album:(NSString *)album title:(NSString *)title;
 
 @end
