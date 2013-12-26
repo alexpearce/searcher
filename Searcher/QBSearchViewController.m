@@ -16,6 +16,8 @@
 
 // Minimum number of item rows each group row should occupy
 static NSUInteger kGroupRowHeight = 5;
+// Spacing, in item rows, between adjacent groups that are equal to or greater than kGroupRowHeight high
+static NSUInteger kGroupRowSpacing = 1;
 // Height of item row
 static CGFloat kItemRowHeight = 17.;
 // Vertical padding of item row
@@ -107,10 +109,15 @@ static CGFloat kItemRowPadding = 2.;
     groupItemsCount = group.trackCount;
     [tempItemRows addIndexesInRange:NSMakeRange(rowCount, groupItemsCount)];
     rowCount += groupItemsCount;
+    // Pad out groups with too few rows (smaller than the minimum group height),
+    // or add a blank end row to groups big enough
     if (groupItemsCount < kGroupRowHeight) {
       dummyRowCount = kGroupRowHeight - groupItemsCount;
       [tempDummyRows addIndexesInRange:NSMakeRange(rowCount, dummyRowCount)];
       rowCount += dummyRowCount;
+    } else {
+      [tempDummyRows addIndexesInRange:NSMakeRange(rowCount, kGroupRowSpacing)];
+      rowCount += kGroupRowSpacing;
     }
   }
   _dummyRows = [[NSIndexSet alloc] initWithIndexSet:tempDummyRows];
@@ -154,6 +161,8 @@ static CGFloat kItemRowPadding = 2.;
     NSInteger numTracksForProperty = [_tracksController groupAtGroupIndex:row].trackCount;
     if (numTracksForProperty < kGroupRowHeight) {
       numTracksForProperty = kGroupRowHeight;
+    } else {
+      numTracksForProperty += kGroupRowSpacing;
     }
     return numTracksForProperty*(kItemRowHeight + kItemRowPadding);
   } else {
