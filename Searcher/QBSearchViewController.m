@@ -42,7 +42,7 @@ static CGFloat kItemRowPadding = 2.;
 
 @implementation QBSearchViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
@@ -61,22 +61,17 @@ static CGFloat kItemRowPadding = 2.;
 {
   [super awakeFromNib];
   
-  _itemTableView.target = self;
-  _itemTableView.doubleAction = @selector(activateSelectedRow:);
+  self.itemTableView.target = self;
+  self.itemTableView.doubleAction = @selector(activateSelectedRow:);
   
-  [_groupScrollView setSynchronisedScrollView:_itemScrollView];
-  [_itemScrollView setSynchronisedScrollView:_groupScrollView];
-}
-
-- (BOOL)acceptsFirstResponder
-{
-  return YES;
+  [self.groupScrollView setSynchronisedScrollView:self.itemScrollView];
+  [self.itemScrollView setSynchronisedScrollView:self.groupScrollView];
 }
 
 - (NSUInteger)itemIndexForRow:(NSUInteger)row
 {
   __block NSUInteger itemIndex = 0;
-  [_itemRows enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+  [self.itemRows enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
     if (idx == row) {
       *stop = YES;
     } else {
@@ -92,14 +87,14 @@ static CGFloat kItemRowPadding = 2.;
   
   [self.view.window close];
   // Searching with an empty string clears the selected controller and reloads the table
-  _searchField.stringValue = @"";
-  [self submitSearch:_searchField];
+  self.searchField.stringValue = @"";
+  [self submitSearch:self.searchField];
 }
 
 - (BOOL)rowInTableView:(NSTableView *) tableView IsDummy:(NSUInteger)row
 {
-  if (tableView == _itemTableView) {
-    return [_dummyRows containsIndex:row];
+  if (tableView == self.itemTableView) {
+    return [self.dummyRows containsIndex:row];
   }
   return YES;
 }
@@ -126,8 +121,8 @@ static CGFloat kItemRowPadding = 2.;
       rowCount += kGroupRowSpacing;
     }
   }
-  _dummyRows = [[NSIndexSet alloc] initWithIndexSet:tempDummyRows];
-  _itemRows = [[NSIndexSet alloc] initWithIndexSet:tempItemRows];
+  self.dummyRows = [[NSIndexSet alloc] initWithIndexSet:tempDummyRows];
+  self.itemRows = [[NSIndexSet alloc] initWithIndexSet:tempItemRows];
 }
 
 #pragma mark - IBAction
@@ -135,13 +130,13 @@ static CGFloat kItemRowPadding = 2.;
 - (IBAction)submitSearch:(id)sender
 {
   // Start the spinner, perform the search, reload the data, stop the spinner, scroll to top
-  [_progressIndicator startAnimation:nil];
+  [self.progressIndicator startAnimation:nil];
   [self.selectedSource searchWithString:[sender stringValue]];
   [self populateIndexSets];
-  [_groupTableView reloadData];
-  [_itemTableView reloadData];
-  [_progressIndicator stopAnimation:nil];
-  [[_itemScrollView contentView] scrollToPoint:NSZeroPoint];
+  [self.groupTableView reloadData];
+  [self.itemTableView reloadData];
+  [self.progressIndicator stopAnimation:nil];
+  [[self.itemScrollView contentView] scrollToPoint:NSZeroPoint];
 }
 
 #pragma mark - NSTextFieldDelegate
@@ -151,6 +146,10 @@ static CGFloat kItemRowPadding = 2.;
   if (commandSelector == @selector(moveDown:)) {
     // For some reason NSWindow's selectNextKeyView: fails to change the first responder here
     [self.view.window selectKeyViewFollowingView:control];
+    return YES;
+  } else if (commandSelector == @selector(insertNewline:)) {
+    // On return, activate the first row
+    [self activateAtRow:0];
     return YES;
   }
   return NO;
@@ -163,7 +162,7 @@ static CGFloat kItemRowPadding = 2.;
   // Group cells are an integer number of item cells high, which are kItemRowHeight high.
   // If the group contains fewer items than kGroupRowHeight, the group cell is kGroupRowHeight item cells high.
   // If the group contains some higher number of items, the group cell is that number of item cells high.
-  if (tableView == _groupTableView) {
+  if (tableView == self.groupTableView) {
     NSInteger numTracksForProperty = [self.selectedSource groupAtGroupIndex:row].trackCount;
     if (numTracksForProperty < kGroupRowHeight) {
       numTracksForProperty = kGroupRowHeight;
@@ -219,10 +218,10 @@ static CGFloat kItemRowPadding = 2.;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-  if (tableView == _groupTableView) {
+  if (tableView == self.groupTableView) {
     return [self.selectedSource groupCount];
   } else {
-    return [_dummyRows count] + [_itemRows count];
+    return [self.dummyRows count] + [self.itemRows count];
   }
 }
 

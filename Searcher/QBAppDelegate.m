@@ -13,12 +13,12 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-  _viewController = [[QBSearchViewController alloc] initWithNibName:@"QBSearchViewController" bundle:nil];
-  _window.contentView = _viewController.view;
+  self.viewController = [[QBSearchViewController alloc] initWithNibName:@"QBSearchViewController" bundle:nil];
+  self.window.contentView = self.viewController.view;
   // For some reason NSWindow's setInitialFirstResponder: doesn't focus the searchField on launch, so do it manually
-  [_viewController.searchField becomeFirstResponder];
+  [self.viewController.searchField becomeFirstResponder];
   
-  _window.backgroundColor = [NSColor colorWithCalibratedRed:(50/255.) green:(53/255.) blue:(61/255.) alpha:1];
+  self.window.backgroundColor = [NSColor colorWithCalibratedRed:(50/255.) green:(53/255.) blue:(61/255.) alpha:1];
 
   // Register global hotkey
   EventHotKeyRef gMyHotKeyRef;
@@ -42,8 +42,8 @@ OSStatus myHotKeyHandler(EventHandlerCallRef nextHandler,EventRef theEvent, void
 
 - (void)focus
 {
-  [_window makeKeyAndOrderFront:nil];
-  [_viewController.searchField becomeFirstResponder];
+  [self.window makeKeyAndOrderFront:nil];
+  [self.viewController.searchField becomeFirstResponder];
   [NSApp activateIgnoringOtherApps:YES];
 }
 
