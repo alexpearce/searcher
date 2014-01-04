@@ -21,7 +21,7 @@
   if (keyCode == 36 && selectedRow > -1) {
     // Return, play the track the row corresponds to (if a row is selected)
     if ([[self dataSource] respondsToSelector:@selector(activateSelectedRow:)]) {
-      [(id<QBTableViewDataSource>)[self dataSource] activateSelectedRow:self];
+      [(id<QBTableViewDelegate>)[self dataSource] activateSelectedRow:self];
     }
   } else if (keyCode == 126 && selectedRow == 0) {
     // If we're on the first row and it's an up arrow key, cycle to the next first responder

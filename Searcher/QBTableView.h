@@ -12,7 +12,7 @@
 
 @end
 
-@protocol QBTableViewDataSource <NSTableViewDataSource>
+@protocol QBTableViewDelegate <NSTableViewDelegate>
 
 @optional
 /**

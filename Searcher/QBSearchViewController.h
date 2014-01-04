@@ -18,7 +18,7 @@
  * Controller for the main search view, with a search field and results table.
  * It is the data source and delegate for both group and item view-based tables.
  */
-@interface QBSearchViewController : NSViewController <NSTextFieldDelegate, QBTableViewDataSource, NSTableViewDelegate>
+@interface QBSearchViewController : NSViewController <NSTextFieldDelegate, NSTableViewDataSource, QBTableViewDelegate>
 
 @property (weak) IBOutlet NSSearchField *searchField;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;

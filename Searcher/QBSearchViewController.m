@@ -225,7 +225,7 @@ static CGFloat kItemRowPadding = 2.;
   }
 }
 
-#pragma mark - QBTableViewDataSource
+#pragma mark - QBTableViewDelegate
 
 - (void)activateSelectedRow:(NSTableView *)tableView
 {
